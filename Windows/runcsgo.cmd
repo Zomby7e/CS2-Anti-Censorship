@@ -1,36 +1,35 @@
 @echo off
-chcp 936
+chcp 65001
 color a
 for /f "delims=" %%a in ('"reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 730" | find "InstallLocation""') do (set reg_csgopath=%%a)
 
 
 :menu
-mode con cols=45 lines=25
+mode con cols=50 lines=25
 cls
-title CS:GO¼òÒ×¹¤¾ß
+title CS:GO Simple Tool
 echo ------------------------------------------
-echo Counter-Strike Global Offensive-¼òÒ×¹¤¾ß
-echo.
+echo Counter-Strike Global Offensive - Simple Tool
 echo ------------------------------------------
-echo [1]È«²¿·´ºÍÐ³(ÍÆ¼ö)
-echo [2]·´ºÍÐ³È«²¿»Ö¸´(ÍÆ¼ö)
+echo [1] All anti-harmony(recommend)
+echo [2] Cancel all anti-harmony(recommend)
 echo.
-echo [v]¹Ø±ÕµÍ±©Á¦Ä£Ê½(Î´Êµ×°)
-echo [b]»Ö¸´ºìÉ«ÑªÒº
-echo [e]»Ö¸´Ó¢ÓïÓïÒô
+echo [v] Turn off "low violence mode"
+echo [b] Red blood
+echo [e] English voice
 echo.
-echo [d]É¾³ýËùÓÐºÍÐ³ÎÄ¼þ(²»¿É»Ö¸´)
-echo [c]¸²¸Çconfigµ½ÓÎÏ·Ä¿Â¼
+echo [d] Delete all "harmony" patch.
+echo [c] Overwrite the config file.
 echo.
-echo [w]Æô¶¯¹ú¼Ê°æCS:GO
-echo [p]Æô¶¯ÍêÃÀÊÀ½ç°æCS:GO
-echo [fix]ÐÞ¸´VAC±»ÆÁ±ÎÎÊÌâ
+echo [w] Launch the "perfectworld" version of CS:GO.
+echo [p] Launch the CS:GO.
+echo [fix] Fix VAC
 echo.
-echo [h]°ïÖú
-echo [0]ÍË³ö
+echo [h] Help
+echo [0] Exit
 echo ------------------------------------------
 
-set /p user_input=ÇëÑ¡Ôñ¹¦ÄÜ:
+set /p user_input=choose function:
 if "%user_input%"=="1" goto case1
 if "%user_input%"=="2" goto case2
 if "%user_input%"=="v" goto v
@@ -45,23 +44,19 @@ if "%user_input%"=="c" goto copycfg
 if "%user_input%"=="fix" goto vacfix_0
 
 :help
-title ÏÔÊ¾°ïÖú
+title Information
 cls
 echo ------------------------------------------
-echo [CS:GO]¼òÒ×¹¤¾ß(csgocmd_cn)
+echo A simple script for CS:GO on Windows.
 echo.
-echo ÊäÈë¶ÔÓ¦´úºÅ²¢»Ø³µ¼´¿ÉÖ´ÐÐÏà¹Ø²Ù×÷
-echo (±ÈÈçhÎª°ïÖú£¬pÎªÍêÃÀÊÀ½ç¹ú·þ£¬wÎª¹ú¼Ê·þ)
-echo ÏÔÊ¾¡°ÏµÍ³ÕÒ²»µ½Ö¸¶¨µÄÎÄ¼þ¡£¡±
-echo ÒâÎ¶×ÅÎÄ¼þ¶ªÊ§»òÕßÄúÖØ¸´Ö´ÐÐ´Ë³ÌÊ½
+echo simply type a letter and press Enter to use the function.
+echo If it displays "The system cannot find the specified file"
+echo Those files may be lost or you run this program repeatedly
 echo.
-echo ¡¤ÖÐ¹ú´óÂ½µØÇøÎªºÚÉ«ÑªÒº
-echo ¡¤ÖÐ¹ú´óÂ½µØÇøÎªÖÐÎÄÓïÒô
+echo Â·By default, the perfect world version of CSGO will have black blood.
+echo Â·By default, the perfect world version of CSGO will have Chinese voice.
 echo.
-echo ÕâÐ©¡°ºÍÐ³¡±¹¦ÄÜ´æ·ÅÔÚÈçÏÂÂ·¾¶[É¾³ý¼´Ê§Ð§]
-echo \Counter-Strike Global Offensive\csgo
-echo.
-echo ÎÒµÄCS:GOÂ·¾¶
+echo Your CS:GO installation path:
 echo %reg_csgopath:~33%
 echo ------------------------------------------
 pause
@@ -69,14 +64,14 @@ goto menu
 
 :case1
 cls
-echo [ÖØÃüÃûÎÄµµ]È«²¿·´ºÍÐ³
+echo All anti-harmony
 echo.
-echo ¿ªÊ¼½øÐÐ[µÍ±©Á¦]·´ºÍÐ³
+echo Turn off "low violence mode"
 echo.
 ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_000.vpk"   pakxv_lowviolence_000.bak
 ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_dir.vpk"     pakxv_lowviolence_dir.bak
 echo.
-echo ¿ªÊ¼½øÐÐ[ÖÐÎÄÓïÒô]·´ºÍÐ³
+echo Disable Chinese voice.
 echo.
 ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_000.vpk"  pakxv_audiochinese_000.bak
 ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_001.vpk"  pakxv_audiochinese_001.bak
@@ -85,27 +80,27 @@ ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_003.vpk"  pakxv_audiochinese_003
 ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_004.vpk"  pakxv_audiochinese_004.bak
 ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_dir.vpk"   pakxv_audiochinese_dir.bak
 echo.
-echo ¿ªÊ¼½øÐÐ[ºÚÉ«ÑªÒº]·´ºÍÐ³
+echo Red blood.
 echo.
 ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_000.vpk"  pakxv_perfectworld_000.bak
 ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_001.vpk"  pakxv_perfectworld_001.bak
 ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_dir.vpk"  pakxv_perfectworld_dir.bak
 echo.
-echo [Ö´ÐÐ½áÊø]Çë¼ì²é¿ØÖÆÌ¨
+echo [Over]You can check the console.
 echo.
 pause
 goto menu
 
 :case2
 cls
-echo [ÖØÃüÃûÎÄµµ]·´ºÍÐ³È«²¿»Ö¸´
+echo Cancel all anti-harmony.
 echo.
-echo ¿ªÊ¼»Ö¸´[µÍ±©Á¦Ä£Ê½]
+echo Restore "low violence mode" files
 echo.
 ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_000.bak"   pakxv_lowviolence_000.vpk
 ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_dir.bak"   pakxv_lowviolence_dir.vpk
 echo.
-echo ¿ªÊ¼»Ö¸´[ÖÐÎÄÓïÒô]
+echo Chinese voice.
 echo.
 ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_000.bak"  pakxv_audiochinese_000.vpk
 ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_001.bak"  pakxv_audiochinese_001.vpk
@@ -114,45 +109,45 @@ ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_003.bak"  pakxv_audiochinese_003
 ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_004.bak"  pakxv_audiochinese_004.vpk
 ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_dir.bak"  pakxv_audiochinese_dir.vpk
 echo.
-echo ¿ªÊ¼»Ö¸´[ºÚÉ«ÑªÒº]
+echo black blood.
 echo.
 ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_000.bak"  pakxv_perfectworld_000.vpk
 ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_001.bak"  pakxv_perfectworld_001.vpk
 ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_dir.bak"  pakxv_perfectworld_dir.vpk
 echo.
-echo [Ö´ÐÐ½áÊø]Çë¼ì²é¿ØÖÆÌ¨
+echo [Over]You can check the console.
 echo.
 pause
 goto menu
 
 :v
 cls
-echo [ÖØÃüÃûÎÄµµ]µÍ±©Á¦·´ºÍÐ³¹¦ÄÜ
+echo Turn off "low violence mode"
 echo.
 ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_000.vpk"   pakxv_lowviolence_000.bak
 ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_dir.vpk"     pakxv_lowviolence_dir.bak
 echo.
-echo [Ö´ÐÐ½áÊø]Çë¼ì²é¿ØÖÆÌ¨
+echo [Over]You can check the console.
 echo.
 pause
 goto menu
 
 :b
 cls
-Echo [ÖØÃüÃûÎÄµµ]ÑªÒº·´ºÍÐ³¹¦ÄÜ
+Echo Red blood.
 echo.
 ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_000.vpk"  pakxv_perfectworld_000.bak
 ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_001.vpk"  pakxv_perfectworld_001.bak
 ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_dir.vpk"  pakxv_perfectworld_dir.bak
 echo.
-echo [Ö´ÐÐ½áÊø]Çë¼ì²é¿ØÖÆÌ¨
+echo [Over]You can check the console.
 echo.
 pause
 goto menu
 
 :e
 cls
-Echo [ÖØÃüÃûÎÄµµ]ÖÐÎÄÓïÒô·´ºÍÐ³¹¦ÄÜ
+Echo English voice.
 echo.
 ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_000.vpk"  pakxv_audiochinese_000.bak
 ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_001.vpk"  pakxv_audiochinese_001.bak
@@ -161,7 +156,7 @@ ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_003.vpk"  pakxv_audiochinese_003
 ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_004.vpk"  pakxv_audiochinese_004.bak
 ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_dir.vpk"   pakxv_audiochinese_dir.bak
 echo.
-echo [Ö´ÐÐ½áÊø]Çë¼ì²é¿ØÖÆÌ¨
+echo [Over]You can check the console.
 echo.
 pause
 goto menu
@@ -169,13 +164,13 @@ goto menu
 :d
 mode con cols=120 lines=30
 cls
-echo [É¾³ýÎÄµµ]È«²¿·´ºÍÐ³
+echo Delete all "harmony" patch.
 echo.
-echo É¾³ý[µÍ±©Á¦]
+echo Delete "low violence mode" files.
 echo.
 del "%reg_csgopath:~33%\csgo\pakxv_lowviolence_000.vpk"
 del "%reg_csgopath:~33%\csgo\pakxv_lowviolence_dir.vpk"
-echo É¾³ý[ÖÐÎÄÓïÒô]
+echo Delete "Chinese voice" files.
 echo.
 del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_000.vpk"
 del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_001.vpk"
@@ -183,13 +178,13 @@ del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_002.vpk"
 del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_003.vpk"
 del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_004.vpk"
 del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_dir.vpk"
-echo É¾³ý[ºÚÉ«ÑªÒº]
+echo Delete "Black blood" files.
 echo.
 del "%reg_csgopath:~33%\csgo\pakxv_perfectworld_000.vpk"
 del "%reg_csgopath:~33%\csgo\pakxv_perfectworld_001.vpk"
 del "%reg_csgopath:~33%\csgo\pakxv_perfectworld_dir.vpk"
 echo.
-echo [Ö´ÐÐ½áÊø]Çë¼ì²é¿ØÖÆÌ¨
+echo [Over]You can check the console.
 echo.
 pause
 goto menu
@@ -197,7 +192,7 @@ goto menu
 :copycfg
 cls
 copy /y autoexec.cfg "%reg_csgopath:~33%\csgo\cfg\"
-echo [Ö´ÐÐ½áÊø]ÒÑ³¢ÊÔµ¼Èëautoexec.cfgµ½%reg_csgopath:~33%\csgo\cfg
+echo [Over]Try to import the configuration file to %reg_csgopath:~33%\csgo\cfg
 pause
 cls
 goto menu
@@ -210,10 +205,11 @@ explorer "steam://rungameid/730//-worldwide -novid -tickrate 128"
 exit
 
 :vacfix_0
-title CSGOÍø°ÉVAC£¦VPNÐÞ¸´¹¤¾ß     -by °Ù¶ÈÌù°É ¾Ñ»÷ÊÖRicky
+title Fix VAC function
+echo "Fix VAC function -by Sniper Ricky from Baidu Post Bar"
  >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 if '%errorlevel%' NEQ '0' (
-echo ÐèÒªÇëÇó¹ÜÀíÔ±È¨ÏÞ
+echo "Request admin rights"
 goto UACPrompt
  ) else ( goto vacfix_1 )
 
@@ -238,18 +234,18 @@ bcdedit.exe /set {current} nx alwayson
 for /f "delims=" %%a in ('"reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 730" | find "UninstallString""') do (set reg_steampath=%%a)
 cd /d %reg_steampath:~34,-32%\bin
 cls
-echo [VACÐÞ¸´]È·¶¨Ö´ÐÐVACÐÞ¸´Âð
-echo Steam°²×°Â·¾¶Îª£º %reg_steampath:~34,-32%
+echo [VAC fix]confirm
+echo Steam Installation pathï¼š %reg_steampath:~34,-32%
 echo.
 pause
 cls
-echo [VACÐÞ¸´]¿ªÊ¼Ö´ÐÐ
+echo [VAC fix]Start
 echo.
 steamservice.exe /install
 echo.
 steamservice.exe /repair
 echo.
-echo [VACÐÞ¸´]Ö´ÐÐ½áÊø
+echo [VAC fix]Over
 echo.
 pause
 goto menu
