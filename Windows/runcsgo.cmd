@@ -11,14 +11,14 @@ title CS:GO Simple Tool
 echo ------------------------------------------
 echo Counter-Strike Global Offensive - Simple Tool
 echo ------------------------------------------
-echo [1] All anti-harmony(recommend)
-echo [2] Cancel all anti-harmony(recommend)
+echo [1] All anti-censorship(recommend)
+echo [2] Cancel all anti-censorship(recommend)
 echo.
 echo [v] Turn off "low violence mode"
 echo [b] Red blood
 echo [e] English voice
 echo.
-echo [d] Delete all "harmony" patch.
+echo [d] Delete all "censorship" patch.
 echo [c] Overwrite the config file.
 echo.
 echo [w] Launch the "perfectworld" version of CS:GO.
@@ -64,7 +64,7 @@ goto menu
 
 :case1
 cls
-echo All anti-harmony
+echo All anti-censorship
 echo.
 echo Turn off "low violence mode"
 echo.
@@ -93,7 +93,7 @@ goto menu
 
 :case2
 cls
-echo Cancel all anti-harmony.
+echo Cancel all anti-censorship.
 echo.
 echo Restore "low violence mode" files
 echo.
@@ -164,7 +164,7 @@ goto menu
 :d
 mode con cols=120 lines=30
 cls
-echo Delete all "harmony" patch.
+echo Delete all "censorship" patch.
 echo.
 echo Delete "low violence mode" files.
 echo.
