@@ -3,160 +3,88 @@ chcp 65001
 color a
 for /f "delims=" %%a in ('"reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 730" | find "InstallLocation""') do (set reg_csgopath=%%a)
 
+@REM Run Perfect World version silently
+if "%1"=="perfectworld_silent" goto perfectworld_silent
 
 :menu
-mode con cols=50 lines=25
+mode con cols=80 lines=25
 cls
-title CS:GO Simple Tool
+title CS2 Simple Tool
 echo ------------------------------------------
-echo Counter-Strike Global Offensive - Simple Tool
+echo Counter-Strike 2 - Simple Tool
 echo ------------------------------------------
-echo [1] All anti-censorship(recommend)
-echo [2] Cancel all anti-censorship(recommend)
+echo [w] Launch the original CS2.
+echo [p] Perfectworld with Auto anti-censorship
 echo.
-echo [v] Turn off "low violence mode"
-echo [b] Red blood
-echo [e] English voice
+echo [1] Anti-censorship on
+echo [2] Anti-censorship off
 echo.
 echo [d] Delete all "censorship" patch.
-echo [c] Overwrite the config file.
-echo.
-echo [w] Launch the "perfectworld" version of CS:GO.
-echo [p] Launch the CS:GO.
+echo [o] Open CS2 cfg folder
 echo [fix] Fix VAC
 echo.
 echo [h] Help
-echo [0] Exit
+echo [q] Quit
 echo ------------------------------------------
 
 set /p user_input=choose function:
 if "%user_input%"=="1" goto case1
 if "%user_input%"=="2" goto case2
-if "%user_input%"=="v" goto v
-if "%user_input%"=="b" goto b
-if "%user_input%"=="e" goto e
 if "%user_input%"=="d" goto d
 if "%user_input%"=="h" goto help
-if "%user_input%"=="0" goto 0
+if "%user_input%"=="q" goto quit
 if "%user_input%"=="p" goto perfectworld
 if "%user_input%"=="w" goto worldwide
-if "%user_input%"=="c" goto copycfg
+if "%user_input%"=="o" goto opencfgdir
 if "%user_input%"=="fix" goto vacfix_0
 
 :help
 title Information
 cls
 echo ------------------------------------------
-echo A simple script for CS:GO on Windows.
+echo A simple script for CS2 on Windows.(%~nx0)
 echo.
 echo simply type a letter and press Enter to use the function.
 echo If it displays "The system cannot find the specified file"
 echo Those files may be lost or you run this program repeatedly
 echo.
-echo ·By default, the perfect world version of CSGO will have black blood.
-echo ·By default, the perfect world version of CSGO will have Chinese voice.
+echo This tool is specifically for
+echo the special version of CS2 in mainland China.
+echo The anti-censorship feature does not guarantee a complete
+echo restoration of the international server's experience.
+echo This tool is provided without any warranties.
 echo.
-echo Your CS:GO installation path:
+echo Your CS2 installation path:
 echo %reg_csgopath:~33%
+echo.
+echo The "censorship" functionalities
+echo are located in the following path:
+echo %reg_csgopath:~33%\game\csgo_lv
+echo (deletion renders them ineffective)
 echo ------------------------------------------
 pause
 goto menu
 
 :case1
 cls
-echo All anti-censorship
+echo [Rename files] Anti-censorship on
 echo.
-echo Turn off "low violence mode"
+echo Renaming files
 echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_000.vpk"   pakxv_lowviolence_000.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_dir.vpk"     pakxv_lowviolence_dir.bak
-echo.
-echo Disable Chinese voice.
-echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_000.vpk"  pakxv_audiochinese_000.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_001.vpk"  pakxv_audiochinese_001.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_002.vpk"  pakxv_audiochinese_002.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_003.vpk"  pakxv_audiochinese_003.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_004.vpk"  pakxv_audiochinese_004.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_dir.vpk"   pakxv_audiochinese_dir.bak
-echo.
-echo Red blood.
-echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_000.vpk"  pakxv_perfectworld_000.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_001.vpk"  pakxv_perfectworld_001.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_dir.vpk"  pakxv_perfectworld_dir.bak
-echo.
-echo [Over]You can check the console.
+ren "%reg_csgopath:~33%\game\csgo_lv" "csgo_lv.backup"
+echo [Finished] Please check the console for any error messages.
 echo.
 pause
 goto menu
 
 :case2
 cls
-echo Cancel all anti-censorship.
+echo [Rename files] revert to original
 echo.
-echo Restore "low violence mode" files
+echo Renaming files
 echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_000.bak"   pakxv_lowviolence_000.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_dir.bak"   pakxv_lowviolence_dir.vpk
-echo.
-echo Chinese voice.
-echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_000.bak"  pakxv_audiochinese_000.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_001.bak"  pakxv_audiochinese_001.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_002.bak"  pakxv_audiochinese_002.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_003.bak"  pakxv_audiochinese_003.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_004.bak"  pakxv_audiochinese_004.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_dir.bak"  pakxv_audiochinese_dir.vpk
-echo.
-echo black blood.
-echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_000.bak"  pakxv_perfectworld_000.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_001.bak"  pakxv_perfectworld_001.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_dir.bak"  pakxv_perfectworld_dir.vpk
-echo.
-echo [Over]You can check the console.
-echo.
-pause
-goto menu
-
-:v
-cls
-echo Turn off "low violence mode"
-echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_000.vpk"   pakxv_lowviolence_000.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_dir.vpk"     pakxv_lowviolence_dir.bak
-echo.
-echo [Over]You can check the console.
-echo.
-pause
-goto menu
-
-:b
-cls
-Echo Red blood.
-echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_000.vpk"  pakxv_perfectworld_000.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_001.vpk"  pakxv_perfectworld_001.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_dir.vpk"  pakxv_perfectworld_dir.bak
-echo.
-echo [Over]You can check the console.
-echo.
-pause
-goto menu
-
-:e
-cls
-Echo English voice.
-echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_000.vpk"  pakxv_audiochinese_000.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_001.vpk"  pakxv_audiochinese_001.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_002.vpk"  pakxv_audiochinese_002.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_003.vpk"  pakxv_audiochinese_003.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_004.vpk"  pakxv_audiochinese_004.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_dir.vpk"   pakxv_audiochinese_dir.bak
-echo.
-echo [Over]You can check the console.
+ren "%reg_csgopath:~33%\game\csgo_lv.backup" "csgo_lv"
+echo [Finished] Please check the console for any error messages.
 echo.
 pause
 goto menu
@@ -164,44 +92,42 @@ goto menu
 :d
 mode con cols=120 lines=30
 cls
-echo Delete all "censorship" patch.
+echo [Delete files] Delete all "censorship" patch.
 echo.
-echo Delete "low violence mode" files.
+echo Deleting files
 echo.
-del "%reg_csgopath:~33%\csgo\pakxv_lowviolence_000.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_lowviolence_dir.vpk"
-echo Delete "Chinese voice" files.
+del "%reg_csgopath:~33%\game\csgo_lv"
 echo.
-del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_000.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_001.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_002.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_003.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_004.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_dir.vpk"
-echo Delete "Black blood" files.
-echo.
-del "%reg_csgopath:~33%\csgo\pakxv_perfectworld_000.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_perfectworld_001.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_perfectworld_dir.vpk"
-echo.
-echo [Over]You can check the console.
+echo [Finished] Please check the console for any error messages.
+echo [Note] If the game encounters errors,
+echo checking the file integrity should restore it.
 echo.
 pause
 goto menu
 
-:copycfg
+:opencfgdir
 cls
-copy /y autoexec.cfg "%reg_csgopath:~33%\csgo\cfg\"
-echo [Over]Try to import the configuration file to %reg_csgopath:~33%\csgo\cfg
+explorer "%reg_csgopath:~33%\game\csgo\cfg"
+echo The game's config file path has been opened in a new window.
 pause
 cls
 goto menu
 
 :perfectworld
-explorer "steam://rungameid/730//-perfectworld -novid -tickrate 128"
+cls
+ren "%reg_csgopath:~33%\game\csgo_lv" "csgo_lv.backup"
+start /min cmd /c "%0 perfectworld_silent"
 exit
+
+:perfectworld_silent
+cls
+echo Do not close this window, it will close automatically when the game ends.
+"%reg_csgopath:~33%\game\bin\win64\cs2.exe" "-perfectworld" "-novid"
+ren "%reg_csgopath:~33%\game\csgo_lv.backup" "csgo_lv"
+exit
+
 :worldwide
-explorer "steam://rungameid/730//-worldwide -novid -tickrate 128"
+start "" "%reg_csgopath:~33%\game\bin\win64\cs2.exe" "-worldwide" "-novid"
 exit
 
 :vacfix_0
@@ -250,7 +176,7 @@ echo.
 pause
 goto menu
 
-0:
+:quit
 exit
 
 end:

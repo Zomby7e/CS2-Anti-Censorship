@@ -3,66 +3,61 @@ chcp 936
 color a
 for /f "delims=" %%a in ('"reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 730" | find "InstallLocation""') do (set reg_csgopath=%%a)
 
+@REM 静默启动完美世界版游戏
+if "%1"=="perfectworld_silent" goto perfectworld_silent
 
 :menu
 mode con cols=45 lines=25
 cls
-title CS:GO简易工具
+title CS2 简易工具
 echo ------------------------------------------
-echo Counter-Strike Global Offensive-简易工具
-echo.
+echo Counter-Strike 2 - 简易工具
 echo ------------------------------------------
-echo [1]全部反和谐(推荐)
-echo [2]反和谐全部恢复(推荐)
+echo [w] 启动国际版 CS2
+echo [p] 启动国服 CS2 （自动反和谐）
 echo.
-echo [v]关闭低暴力模式(未实装)
-echo [b]恢复红色血液
-echo [e]恢复英语语音
+echo [1] 全部反和谐
+echo [2] 反和谐全部恢复
 echo.
-echo [d]删除所有和谐文件(不可恢复)
-echo [c]覆盖config到游戏目录
+echo [d] 删除所有和谐文件(不可恢复)
+echo [o] 打开游戏 config 文件目录
+echo [fix] 修复 VAC 被屏蔽问题
 echo.
-echo [w]启动国际版CS:GO
-echo [p]启动完美世界版CS:GO
-echo [fix]修复VAC被屏蔽问题
-echo.
-echo [h]帮助
-echo [0]退出
+echo [h] 帮助
+echo [q] 退出
 echo ------------------------------------------
 
 set /p user_input=请选择功能:
 if "%user_input%"=="1" goto case1
 if "%user_input%"=="2" goto case2
-if "%user_input%"=="v" goto v
-if "%user_input%"=="b" goto b
-if "%user_input%"=="e" goto e
 if "%user_input%"=="d" goto d
 if "%user_input%"=="h" goto help
-if "%user_input%"=="0" goto 0
+if "%user_input%"=="q" goto quit
 if "%user_input%"=="p" goto perfectworld
 if "%user_input%"=="w" goto worldwide
-if "%user_input%"=="c" goto copycfg
+if "%user_input%"=="o" goto opencfgdir
 if "%user_input%"=="fix" goto vacfix_0
 
 :help
 title 显示帮助
 cls
 echo ------------------------------------------
-echo [CS:GO]简易工具(csgocmd_cn)
+echo [CS2]简易工具(%~nx0)
 echo.
 echo 输入对应代号并回车即可执行相关操作
-echo (比如h为帮助，p为完美世界国服，w为国际服)
+echo (比如 h 为帮助，p 为完美世界国服，w 为国际服)
 echo 显示“系统找不到指定的文件。”
 echo 意味着文件丢失或者您重复执行此程式
 echo.
-echo ·中国大陆地区为黑色血液
-echo ·中国大陆地区为中文语音
+echo 本工具针对中国大陆地区的 CS2
+echo 反和谐功能不保证完全还原国际服的体验
+echo 本工具没有任何担保
+echo.
+echo CS2 安装在如下路径
+echo %reg_csgopath:~33%
 echo.
 echo 这些“和谐”功能存放在如下路径[删除即失效]
-echo \Counter-Strike Global Offensive\csgo
-echo.
-echo 我的CS:GO路径
-echo %reg_csgopath:~33%
+echo %reg_csgopath:~33%\game\csgo_lv
 echo ------------------------------------------
 pause
 goto menu
@@ -71,97 +66,22 @@ goto menu
 cls
 echo [重命名文档]全部反和谐
 echo.
-echo 开始进行[低暴力]反和谐
+echo 重命名文件中
 echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_000.vpk"   pakxv_lowviolence_000.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_dir.vpk"     pakxv_lowviolence_dir.bak
-echo.
-echo 开始进行[中文语音]反和谐
-echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_000.vpk"  pakxv_audiochinese_000.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_001.vpk"  pakxv_audiochinese_001.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_002.vpk"  pakxv_audiochinese_002.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_003.vpk"  pakxv_audiochinese_003.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_004.vpk"  pakxv_audiochinese_004.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_dir.vpk"   pakxv_audiochinese_dir.bak
-echo.
-echo 开始进行[黑色血液]反和谐
-echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_000.vpk"  pakxv_perfectworld_000.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_001.vpk"  pakxv_perfectworld_001.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_dir.vpk"  pakxv_perfectworld_dir.bak
-echo.
-echo [执行结束]请检查控制台
+ren "%reg_csgopath:~33%\game\csgo_lv" "csgo_lv.backup"
+echo [执行结束]请检查控制台是否有错误信息
 echo.
 pause
 goto menu
 
 :case2
 cls
-echo [重命名文档]反和谐全部恢复
+echo [重命名文档]恢复原版
 echo.
-echo 开始恢复[低暴力模式]
+echo 重命名文件中
 echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_000.bak"   pakxv_lowviolence_000.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_dir.bak"   pakxv_lowviolence_dir.vpk
-echo.
-echo 开始恢复[中文语音]
-echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_000.bak"  pakxv_audiochinese_000.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_001.bak"  pakxv_audiochinese_001.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_002.bak"  pakxv_audiochinese_002.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_003.bak"  pakxv_audiochinese_003.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_004.bak"  pakxv_audiochinese_004.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_dir.bak"  pakxv_audiochinese_dir.vpk
-echo.
-echo 开始恢复[黑色血液]
-echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_000.bak"  pakxv_perfectworld_000.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_001.bak"  pakxv_perfectworld_001.vpk
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_dir.bak"  pakxv_perfectworld_dir.vpk
-echo.
-echo [执行结束]请检查控制台
-echo.
-pause
-goto menu
-
-:v
-cls
-echo [重命名文档]低暴力反和谐功能
-echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_000.vpk"   pakxv_lowviolence_000.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_lowviolence_dir.vpk"     pakxv_lowviolence_dir.bak
-echo.
-echo [执行结束]请检查控制台
-echo.
-pause
-goto menu
-
-:b
-cls
-Echo [重命名文档]血液反和谐功能
-echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_000.vpk"  pakxv_perfectworld_000.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_001.vpk"  pakxv_perfectworld_001.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_perfectworld_dir.vpk"  pakxv_perfectworld_dir.bak
-echo.
-echo [执行结束]请检查控制台
-echo.
-pause
-goto menu
-
-:e
-cls
-Echo [重命名文档]中文语音反和谐功能
-echo.
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_000.vpk"  pakxv_audiochinese_000.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_001.vpk"  pakxv_audiochinese_001.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_002.vpk"  pakxv_audiochinese_002.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_003.vpk"  pakxv_audiochinese_003.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_004.vpk"  pakxv_audiochinese_004.bak
-ren "%reg_csgopath:~33%\csgo\pakxv_audiochinese_dir.vpk"   pakxv_audiochinese_dir.bak
-echo.
-echo [执行结束]请检查控制台
+ren "%reg_csgopath:~33%\game\csgo_lv.backup" "csgo_lv"
+echo [执行结束]请检查控制台是否有错误信息
 echo.
 pause
 goto menu
@@ -171,46 +91,41 @@ mode con cols=120 lines=30
 cls
 echo [删除文档]全部反和谐
 echo.
-echo 删除[低暴力]
+del "%reg_csgopath:~33%\game\csgo_lv"
 echo.
-del "%reg_csgopath:~33%\csgo\pakxv_lowviolence_000.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_lowviolence_dir.vpk"
-echo 删除[中文语音]
-echo.
-del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_000.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_001.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_002.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_003.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_004.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_audiochinese_dir.vpk"
-echo 删除[黑色血液]
-echo.
-del "%reg_csgopath:~33%\csgo\pakxv_perfectworld_000.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_perfectworld_001.vpk"
-del "%reg_csgopath:~33%\csgo\pakxv_perfectworld_dir.vpk"
-echo.
-echo [执行结束]请检查控制台
+echo [执行结束]请检查控制台是否有错误信息
+echo [提示]如果游戏出现错误，检查文件完整性即可恢复。
 echo.
 pause
 goto menu
 
-:copycfg
+:opencfgdir
 cls
-copy /y autoexec.cfg "%reg_csgopath:~33%\csgo\cfg\"
-echo [执行结束]已尝试导入autoexec.cfg到%reg_csgopath:~33%\csgo\cfg
+explorer "%reg_csgopath:~33%\game\csgo\cfg"
+echo 已经在新窗口打开游戏 Config 文件路径
 pause
 cls
 goto menu
 
 :perfectworld
-explorer "steam://rungameid/730//-perfectworld -novid -tickrate 128"
+cls
+ren "%reg_csgopath:~33%\game\csgo_lv" "csgo_lv.backup"
+start /min cmd /c "%0 perfectworld_silent"
 exit
+
+:perfectworld_silent
+cls
+echo 不要关闭本窗口，游戏结束时它会自动关闭
+"%reg_csgopath:~33%\game\bin\win64\cs2.exe" "-perfectworld" "-novid"
+ren "%reg_csgopath:~33%\game\csgo_lv.backup" "csgo_lv"
+exit
+
 :worldwide
-explorer "steam://rungameid/730//-worldwide -novid -tickrate 128"
+start "" "%reg_csgopath:~33%\game\bin\win64\cs2.exe" "-worldwide" "-novid"
 exit
 
 :vacfix_0
-title CSGO网吧VAC＆VPN修复工具     -by 百度贴吧 狙击手Ricky
+title CS2 网吧VAC＆VPN修复工具     -by 百度贴吧 狙击手Ricky
  >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 if '%errorlevel%' NEQ '0' (
 echo 需要请求管理员权限
@@ -254,7 +169,7 @@ echo.
 pause
 goto menu
 
-0:
+:quit
 exit
 
 end:

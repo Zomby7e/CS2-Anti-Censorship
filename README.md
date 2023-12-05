@@ -1,13 +1,13 @@
-# CSGO-Anti-Censorship
+# CS2-Anti-Censorship
 ## 简单介绍
 
-Against the "perfectworld", Let you experience the original CS:GO. 
+Against the "perfectworld", Let you experience the original CS2. 
 
-完美世界反和谐，让你体验原汁原味的 CS:GO。
+完美世界反和谐，让你体验原汁原味的 CS2。
 
 ## 使用方法
 
-首先确认您正确地安装了 CSGO，下载脚本。
+首先确认您正确地安装了 CS2，下载脚本。
 
 ### Windows 用户
 
@@ -15,7 +15,7 @@ Against the "perfectworld", Let you experience the original CS:GO.
 
 2. 双击运行脚本即可。
 
-### Linux 用户
+### Linux 用户 (暂时失效，请等待适配 CS2)
 
 1. 下载针对 Linux 系统的 sh 脚本 。
 
