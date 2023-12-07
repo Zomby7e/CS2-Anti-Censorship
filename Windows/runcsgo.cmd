@@ -179,7 +179,7 @@ goto menu
 :quit
 exit
 
-end:
-echo This is the end
+:end
+echo You shouldn't see this message
 pause
 exit

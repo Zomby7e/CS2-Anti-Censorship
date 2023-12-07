@@ -172,7 +172,7 @@ goto menu
 :quit
 exit
 
-end:
-echo This is the end
+:end
+echo 你不应该看到这条消息
 pause
 exit
