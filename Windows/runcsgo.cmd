@@ -1,7 +1,15 @@
 @echo off
+setlocal ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION
 chcp 65001
 color a
+@REM Get CS2 installation path from registry
 for /f "delims=" %%a in ('"reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 730" | find "InstallLocation""') do (set reg_csgopath=%%a)
+@REM Locate steam.exe from registry
+for /f "tokens=2*" %%A in ('reg query "HKCU\Software\Valve\Steam" /v SteamExe 2^>nul') do (
+    set "steam_exe=%%B"
+)
+@REM Remove extra quotes (if any)
+set "steam_exe=!steam_exe:"=!"
 
 @REM Run Perfect World version silently
 if "%1"=="perfectworld_silent" goto perfectworld_silent
@@ -56,6 +64,8 @@ echo This tool is provided without any warranties.
 echo.
 echo Your CS2 installation path:
 echo %reg_csgopath:~33%
+echo Location of steam.exe:
+echo "!steam_exe!"
 echo.
 echo The "censorship" functionalities
 echo are located in the following path:
@@ -121,13 +131,14 @@ exit
 
 :perfectworld_silent
 cls
-echo Do not close this window, it will close automatically when the game ends.
-"%reg_csgopath:~33%\game\bin\win64\cs2.exe" "-perfectworld" "-novid"
+echo Do not close this window, Enjoy your game.
+start "" "!steam_exe!" -applaunch 730 -perfectworld
+timeout 30
 ren "%reg_csgopath:~33%\game\csgo_lv.backup" "csgo_lv"
 exit
 
 :worldwide
-start "" "%reg_csgopath:~33%\game\bin\win64\cs2.exe" "-worldwide" "-novid"
+start "" "!steam_exe!" -applaunch 730 -worldwide
 exit
 
 :vacfix_0
@@ -145,23 +156,12 @@ echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"
 "%temp%\getadmin.vbs"
 exit /B
 
-sc config Netman start= AUTO
-sc start Netman
-sc config rasman start= AUTO
-sc start rasman
-sc config tapisrv start= AUTO
-sc start tapisrv
-sc config mpssvc start= AUTO
-sc start mpssvc
-netsh advfirewall set allprofiles state on
-bcdedit.exe /set {current} nx alwayson
-
 :vacfix_1
 for /f "delims=" %%a in ('"reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 730" | find "UninstallString""') do (set reg_steampath=%%a)
 cd /d %reg_steampath:~34,-32%\bin
 cls
 echo [VAC fix]confirm
-echo Steam Installation path： %reg_steampath:~34,-32%
+echo Steam Installation path: %reg_steampath:~34,-32%
 echo.
 pause
 cls
@@ -177,9 +177,5 @@ pause
 goto menu
 
 :quit
-exit
-
-:end
-echo You shouldn't see this message
-pause
+endlocal
 exit
