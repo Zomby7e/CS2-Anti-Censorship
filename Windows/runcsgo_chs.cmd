@@ -1,7 +1,15 @@
 @echo off
+setlocal ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION
 chcp 936
 color a
+@REM 从注册表获取 CS2 的安装路径
 for /f "delims=" %%a in ('"reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 730" | find "InstallLocation""') do (set reg_csgopath=%%a)
+@REM 获取 steam.exe 的路径
+for /f "tokens=2*" %%A in ('reg query "HKCU\Software\Valve\Steam" /v SteamExe 2^>nul') do (
+    set "steam_exe=%%B"
+)
+@REM 如果有，删除多余的引号
+set "steam_exe=!steam_exe:"=!"
 
 @REM 静默启动完美世界版游戏
 if "%1"=="perfectworld_silent" goto perfectworld_silent
@@ -55,6 +63,8 @@ echo 本工具没有任何担保
 echo.
 echo CS2 安装在如下路径
 echo %reg_csgopath:~33%
+echo steam.exe 的路径
+echo "!steam_exe!"
 echo.
 echo 这些“和谐”功能存放在如下路径[删除即失效]
 echo %reg_csgopath:~33%\game\csgo_lv
@@ -115,13 +125,14 @@ exit
 
 :perfectworld_silent
 cls
-echo 不要关闭本窗口，游戏结束时它会自动关闭
-"%reg_csgopath:~33%\game\bin\win64\cs2.exe" "-perfectworld" "-novid"
+echo 稍后窗口自动关闭，享受游戏吧。
+start "" "!steam_exe!" -applaunch 730 -perfectworld
+timeout 30
 ren "%reg_csgopath:~33%\game\csgo_lv.backup" "csgo_lv"
 exit
 
 :worldwide
-start "" "%reg_csgopath:~33%\game\bin\win64\cs2.exe" "-worldwide" "-novid"
+start "" "!steam_exe!" -applaunch 730 -worldwide
 exit
 
 :vacfix_0
@@ -137,17 +148,6 @@ echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
 echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"
 "%temp%\getadmin.vbs"
 exit /B
-
-sc config Netman start= AUTO
-sc start Netman
-sc config rasman start= AUTO
-sc start rasman
-sc config tapisrv start= AUTO
-sc start tapisrv
-sc config mpssvc start= AUTO
-sc start mpssvc
-netsh advfirewall set allprofiles state on
-bcdedit.exe /set {current} nx alwayson
 
 :vacfix_1
 for /f "delims=" %%a in ('"reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 730" | find "UninstallString""') do (set reg_steampath=%%a)
@@ -170,9 +170,5 @@ pause
 goto menu
 
 :quit
-exit
-
-:end
-echo 你不应该看到这条消息
-pause
+endlocal
 exit
