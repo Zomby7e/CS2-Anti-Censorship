@@ -28,8 +28,9 @@ echo [1] 全部反和谐
 echo [2] 反和谐全部恢复
 echo.
 echo [d] 删除所有和谐文件(不可恢复)
-echo [o] 打开游戏 config 文件目录
-echo [fix] 修复 VAC 被屏蔽问题
+echo [c] 打开游戏 config 文件目录
+echo [v] 修复 VAC 被屏蔽问题
+echo [f] 验证游戏文件完整性
 echo.
 echo [h] 帮助
 echo [q] 退出
@@ -43,8 +44,9 @@ if "%user_input%"=="h" goto help
 if "%user_input%"=="q" goto quit
 if "%user_input%"=="p" goto perfectworld
 if "%user_input%"=="w" goto worldwide
-if "%user_input%"=="o" goto opencfgdir
-if "%user_input%"=="fix" goto vacfix_0
+if "%user_input%"=="c" goto opencfgdir
+if "%user_input%"=="v" goto vacfix_0
+if "%user_input%"=="f" goto verify_files
 
 :help
 title 显示帮助
@@ -166,6 +168,13 @@ steamservice.exe /repair
 echo.
 echo [VAC修复]执行结束
 echo.
+pause
+goto menu
+
+:verify_files
+cls
+start steam://validate/730
+echo [已执行] Steam 客户端将自动验证游戏文件完整性
 pause
 goto menu
 

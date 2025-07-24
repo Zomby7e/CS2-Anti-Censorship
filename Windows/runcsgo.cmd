@@ -28,8 +28,9 @@ echo [1] Anti-censorship on
 echo [2] Anti-censorship off
 echo.
 echo [d] Delete all "censorship" patch.
-echo [o] Open CS2 cfg folder
-echo [fix] Fix VAC
+echo [c] Open CS2 cfg folder
+echo [v] Fix VAC
+echo [f] Verify integrity of game files
 echo.
 echo [h] Help
 echo [q] Quit
@@ -43,8 +44,9 @@ if "%user_input%"=="h" goto help
 if "%user_input%"=="q" goto quit
 if "%user_input%"=="p" goto perfectworld
 if "%user_input%"=="w" goto worldwide
-if "%user_input%"=="o" goto opencfgdir
-if "%user_input%"=="fix" goto vacfix_0
+if "%user_input%"=="c" goto opencfgdir
+if "%user_input%"=="v" goto vacfix_0
+if "%user_input%"=="v" goto verify_files
 
 :help
 title Information
@@ -173,6 +175,13 @@ steamservice.exe /repair
 echo.
 echo [VAC fix]Over
 echo.
+pause
+goto menu
+
+:verify_files
+cls
+start steam://validate/730
+echo [OK] Verifying in background
 pause
 goto menu
 
