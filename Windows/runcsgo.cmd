@@ -46,7 +46,7 @@ if "%user_input%"=="p" goto perfectworld
 if "%user_input%"=="w" goto worldwide
 if "%user_input%"=="c" goto opencfgdir
 if "%user_input%"=="v" goto vacfix_0
-if "%user_input%"=="v" goto verify_files
+if "%user_input%"=="f" goto verify_files
 
 :help
 title Information
